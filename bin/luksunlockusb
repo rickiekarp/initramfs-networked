@@ -1,0 +1,30 @@
+#!/bin/sh
+set -e
+
+# check usb for decryption key
+if [ ! -e /mnt ]; then
+    mkdir -p /mnt
+    sleep 3
+fi
+
+for usbpartition in /dev/disk/by-id/usb-*-part1; do
+    usbdevice=$(readlink -f $usbpartition)
+    if mount -t vfat $usbdevice /mnt 2>/dev/null; then
+        if [ -e /mnt/$CRYPTTAB_KEY.lek ]; then
+            cat /mnt/$CRYPTTAB_KEY.lek
+            umount $usbdevice
+            exit
+        fi
+        umount $usbdevice
+    fi
+done
+
+# check for key on remote
+curl --silent --connect-timeout 10 http://192.168.178.22/key/$CRYPTTAB_KEY.lek --output /mnt/$CRYPTTAB_KEY.lek
+if [ $? == 0 ]; then
+   cat /mnt/$CRYPTTAB_KEY.lek
+   exit
+fi
+
+# ask for password if key can not be found
+/lib/cryptsetup/askpass "Insert USB key and press ENTER: "

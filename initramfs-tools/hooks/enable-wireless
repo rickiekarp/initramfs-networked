@@ -1,0 +1,26 @@
+# !/bin/sh
+
+set -e
+PREREQ=""
+prereqs()
+{
+    echo "${PREREQ}"
+}
+case "${1}" in
+    prereqs)
+        prereqs
+        exit 0
+        ;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+
+# CHANGE HERE for your correct modules.
+manual_add_modules rtw88_8821ce iwlwifi
+copy_exec /sbin/wpa_supplicant
+copy_exec /sbin/wpa_cli
+copy_file config /etc/initramfs-tools/wpa_supplicant.conf /etc/wpa_supplicant.conf
+
+# Install curl binaries into initramfs.
+# Busybox wget implementation has no support for https.
+copy_exec /usr/bin/curl /bin
