@@ -20,7 +20,13 @@ for usbpartition in /dev/disk/by-id/usb-*-part1; do
 done
 
 # check for key on remote
-curl --silent --connect-timeout 10 http://192.168.178.22/keys/luks/$CRYPTTAB_KEY.lek --output /mnt/$CRYPTTAB_KEY.lek
+curl --silent --connect-timeout 10 \
+    -H "X-Vault-Type: keys" \
+    -H "X-Vault-Keyformat: lek" \
+    -H "X-Vault-Key: $CRYPTTAB_KEY" \
+    http://192.168.178.22:12000/vault/fetch \
+    --output /mnt/$CRYPTTAB_KEY.lek
+
 if [ $? == 0 ]; then
    cat /mnt/$CRYPTTAB_KEY.lek
    exit
