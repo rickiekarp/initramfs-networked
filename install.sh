@@ -8,8 +8,8 @@ fi
 
 if [ -f wpa_supplicant.conf ]; then
   cp -r initramfs-tools /etc/
-  cp token.conf /etc/initramfs-tools
-  cp wpa_supplicant.conf /etc/initramfs-tools
+  cp token.conf /etc/initramfs-tools/
+  cp wpa_supplicant.conf /etc/initramfs-tools/
   cp bin/luksunlockusb /bin/luksunlockusb
   update-initramfs -u
 else

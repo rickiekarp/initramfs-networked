@@ -20,7 +20,7 @@ for usbpartition in /dev/disk/by-id/usb-*-part1; do
 done
 
 # load token to be send with the request
-vaultToken=$(cat /etc/token.conf)
+vaultToken=$(cat /etc/initramfs-tools/token.conf)
 
 # check for key on remote
 curl --silent --connect-timeout 10 \
