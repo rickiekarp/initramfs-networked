@@ -16,7 +16,8 @@ esac
 . /scripts/functions
 
 AUTH_LIMIT=30
-INTERFACE=$(/sbin/ip link | awk '{if(substr($2,1,1) =="w") {gsub(":","",$2); print($2); exit;}}')
+INTERFACE="wlp2s0"
+#INTERFACE=$(/sbin/ip link | awk '{if(substr($2,1,1) =="w") {gsub(":","",$2); print($2); exit;}}')
 alias WPACLI="/sbin/wpa_cli -p/tmp/wpa_supplicant -i$INTERFACE "
 
 log_begin_msg "Starting WLAN connection"
