@@ -7,10 +7,12 @@ if [ ! -f $tokenFile ]; then
 fi
 
 if [ -f wpa_supplicant.conf ]; then
+  echo "Copying files"
   cp -r initramfs-tools /etc/
   cp token.conf /etc/initramfs-tools/
   cp wpa_supplicant.conf /etc/initramfs-tools/
   cp bin/luksunlockusb /bin/luksunlockusb
+  echo "Updating initramfs"
   update-initramfs -u
 else
   echo "Error: wpa_supplicant.conf not found, aborting installation"
