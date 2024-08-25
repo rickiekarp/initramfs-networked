@@ -1,2 +1,2 @@
-initramfs-tools/wpa_supplicant.conf
-initramfs-tools/token.conf
+wpa_supplicant.conf
+token.conf
