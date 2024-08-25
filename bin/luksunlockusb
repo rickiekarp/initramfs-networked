@@ -19,11 +19,15 @@ for usbpartition in /dev/disk/by-id/usb-*-part1; do
     fi
 done
 
+# load token to be send with the request
+vaultToken=$(cat /etc/initramfs-tools/token.conf)
+
 # check for key on remote
 curl --silent --connect-timeout 10 \
     -H "X-Vault-Type: keys" \
     -H "X-Vault-Keyformat: lek" \
     -H "X-Vault-Key: $CRYPTTAB_KEY" \
+    -H "X-Vault-Token: $vaultToken" \
     http://192.168.178.22:12000/vault/fetch \
     --output /mnt/$CRYPTTAB_KEY.lek
 
