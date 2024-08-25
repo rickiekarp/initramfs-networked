@@ -16,12 +16,11 @@ esac
 . /scripts/functions
 
 AUTH_LIMIT=30
-INTERFACE="wlp2s0"
+INTERFACE=$(/sbin/ip link | awk '{if(substr($2,1,1) =="w") {gsub(":","",$2); print($2); exit;}}')
 alias WPACLI="/sbin/wpa_cli -p/tmp/wpa_supplicant -i$INTERFACE "
-#INTERFACE=$(/sbin/ip link | awk '{if(substr($2,1,1) =="w") {gsub(":","",$2); print($2); exit;}}')
 
 log_begin_msg "Starting WLAN connection"
-sleep 1 && /sbin/wpa_supplicant  -i$INTERFACE -c/etc/wpa_supplicant.conf -P/run/initram-wpa_supplicant.pid -B -f /tmp/wpa_supplicant.log
+sleep 1 && /sbin/wpa_supplicant  -i$INTERFACE -c/etc/initramfs-tools/wpa_supplicant.conf -P/run/initram-wpa_supplicant.pid -B -f /tmp/wpa_supplicant.log
 
 # Wait for AUTH_LIMIT seconds, then check the status
 limit=${AUTH_LIMIT}
