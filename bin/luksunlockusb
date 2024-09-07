@@ -28,7 +28,7 @@ curl --silent --connect-timeout 10 \
     -H "X-Vault-Keyformat: lek" \
     -H "X-Vault-Key: $CRYPTTAB_KEY" \
     -H "X-Vault-Token: $vaultToken" \
-    http://192.168.178.22:12000/vault/fetch \
+    http://192.168.178.22:12000/vault/v1/fetch/file \
     --output /mnt/$CRYPTTAB_KEY.lek
 
 if [ $? == 0 ]; then
