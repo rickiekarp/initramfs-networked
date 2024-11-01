@@ -24,8 +24,6 @@ vaultToken=$(cat /etc/token.conf)
 
 # check for key on remote
 curl --silent --connect-timeout 10 \
-    -H "X-Vault-Type: keys" \
-    -H "X-Vault-Keyformat: lek" \
     -H "X-Vault-Key: $CRYPTTAB_KEY" \
     -H "X-Vault-Token: $vaultToken" \
     http://192.168.178.22:12000/vault/v1/fetch/file \
